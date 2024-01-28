@@ -13,7 +13,7 @@ def get_val(collection, key, val='noname'):
         key = int(key)
     except ValueError:
         return ("uncorrect key")
-    if key < 0:
+    if key <= 0:
         return ("a negative number")
     if 0 < key < 9:
         return collection[key]

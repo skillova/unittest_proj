@@ -1,13 +1,16 @@
-import unittest
+import pytest
 from utils import dicts
 
-class TestDict(unittest.TestCase):
 
-    def test_get(self):
-        self.assertEqual(dicts.get_val({1: 1, 2: 2, 3: 3}, 1), 1)
-        self.assertEqual(dicts.get_val({1: 1, 2: 2, 3: 3}, str(-1)), "a negative number")
-        self.assertEqual(dicts.get_val({1: 1, 2: 2, 3: 3}, 10), "noname")
-        self.assertEqual(dicts.get_val({1: 1, 2: 2, 3: 3}, str(-10)), "a negative number")
-        self.assertEqual(dicts.get_val({1: 1, 2: 2, 3: 3}, 'qwe'), "uncorrect key")
-        self.assertEqual(dicts.get_val({1: 1, 2: 2, 3: 3}, 'qwe'), "uncorrect key")
+@pytest.fixture
+def dt():
+    un: globals() = "uncorrect key"
+    nega = "a negative number"
+    nn = "noname"
+    return {-1: nega, 0: nega, 1: dicts.collection[1], '-1': nega, '0': nega, '1': dicts.collection[1], 'abc': un,
+            10: nn}
 
+
+def test_getval(dt):
+    for k, v in dt.items():
+        assert dicts.get_val(dicts.collection, key=k) == v
